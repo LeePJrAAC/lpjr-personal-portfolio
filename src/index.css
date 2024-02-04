@@ -1,0 +1,45 @@
+@tailwind base;
+
+@layer base {
+  h1 {
+    @apply text-2xl;
+    @apply font-bold;
+  }
+  h2 {
+    @apply text-xl;
+  }
+  h3 {
+    @apply text-lg;
+  }
+  a {
+    @apply text-blue-600 underline;
+  }
+}
+
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #212529;
+  color: #1f2937;
+  width: 100vw;
+  height: 100vh;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.nav-link {
+  @apply font-bold;
+  @apply text-lg;
+  @apply no-underline;
+  @apply hover:text-amber-800;
+  @apply transition-colors;
+  @apply duration-300;
+  @apply ease-in-out;
+}
