@@ -11,6 +11,7 @@ import { App } from "./routes/app";
 import { Edit } from "./routes/app/edit";
 import { Audio } from "./routes/app/audio";
 import { Video } from "./routes/app/video";
+import { Media } from "./routes/app/media";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
           {
             path: "/app/video",
             element: <Video />,
+          },
+          {
+            path: "/app/media",
+            element: <Media />,
           },
         ],
       },

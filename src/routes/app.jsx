@@ -10,11 +10,14 @@ export function App() {
             New
           </Link>
         </div>
-        <NavLink to='/app/audio' className='nav-link text-stone-900'>
+        <NavLink to='/app/audio' className='nav-link'>
           Audio
         </NavLink>
-        <NavLink to='/app/video' className='nav-link text-stone-900'>
+        <NavLink to='/app/video' className='nav-link'>
           Video
+        </NavLink>
+        <NavLink to='/app/media' className='nav-link'>
+          Media
         </NavLink>
       </div>
       <div className='flex flex-col w-2/3 px-4'>
