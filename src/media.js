@@ -10,7 +10,7 @@ export async function getAllMedia(query = "") {
   let allMedia = await localforage.getItem("media");
   if (!allMedia) allMedia = [];
   if (query) {
-    allMedia = matchSorter(allMedia, query, { keys: ["name", "title", "description"] });
+    allMedia = matchSorter(allMedia, query, { keys: ["name", "title"] });
   }
   return allMedia.sort(sortBy("createdAt"));
 }
@@ -24,7 +24,7 @@ export async function createMedia() {
   return media;
 }
 
-export async function getAllMedia(id) {
+export async function getMedia(id) {
   let allMedia = await localforage.getItem("media");
   let media = allMedia.find((media) => media.id === id);
   return media ?? null;
