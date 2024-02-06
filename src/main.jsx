@@ -7,11 +7,11 @@ import "./index.css";
 import { Root } from "./routes/root";
 import { ErrorPage } from "./error-page";
 import { About } from "./routes/about";
-import { App } from "./routes/app";
-import { Edit } from "./routes/app/edit";
+import { App, loader as appLoader, action as appAction } from "./routes/app";
+import { Edit, action as editAction } from "./routes/app/edit";
+import { Media, loader as mediaLoader } from "./routes/app/media";
 import { Audio } from "./routes/app/audio";
 import { Video } from "./routes/app/video";
-import { Media } from "./routes/app/media";
 
 const router = createBrowserRouter([
   {
@@ -26,10 +26,19 @@ const router = createBrowserRouter([
       {
         path: "/app",
         element: <App />,
+        loader: appLoader,
+        action: appAction,
         children: [
           {
-            path: "/app/edit",
+            path: "/app/:mediaId",
+            element: <Media />,
+            loader: mediaLoader,
+          },
+          {
+            path: "/app/:mediaId/edit",
             element: <Edit />,
+            loader: mediaLoader,
+            action: editAction,
           },
           {
             path: "/app/audio",
@@ -38,10 +47,6 @@ const router = createBrowserRouter([
           {
             path: "/app/video",
             element: <Video />,
-          },
-          {
-            path: "/app/media",
-            element: <Media />,
           },
         ],
       },

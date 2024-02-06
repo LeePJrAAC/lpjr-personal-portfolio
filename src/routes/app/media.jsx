@@ -1,27 +1,30 @@
-import { Form } from "react-router-dom";
+import { Form, useLoaderData, useFetcher } from "react-router-dom";
+import { getMedia } from "../../media";
+
+export async function loader({ params }) {
+  const media = await getMedia(params.mediaId);
+  if (!media) {
+    throw new Response(null, { status: 404, statusText: "Media not found" });
+  }
+  return media;
+}
 
 export function Media() {
-  const media = {
-    name: "Listing Name",
-    title: "Media Title",
-    description: "Media Description",
-    url: "Media URL",
-    image: "Image URL",
-    "image-description": "Image Description",
-    type: "audio",
-  };
+  const media = useLoaderData();
+
+  console.log("media: ", media);
 
   return (
     <div id='media-item' className='flex flex-row space-x-4'>
       <div>
-        <img key={media.image} src={media.image || null} alt={media["image-description"]} />
+        <img key={media.image_src} src={media.image_src || null} alt={media["image-description"]} />
       </div>
       <div className='space-y-2 pe-4'>
-        {media.name && <h1>{media.name}</h1>}
+        {media.listing && <h1>{media.listing}</h1>}
         {media.title && <h2>Title: {media.title}</h2>}
-        {media.url && <p>URL: {media.url}</p>}
-        {media.type && <p>Format: {media.type}</p>}
-        {media.description && <p>Description: {media.description}</p>}
+        {media.media_src && <p>URL: {media.media_src}</p>}
+        {media.format && <p>Format: {media.format}</p>}
+        {media.desc && <p>Description: {media.desc}</p>}
 
         <div className='flex flex-row justify-end space-x-4 mt-4'>
           <Form action='edit'>
