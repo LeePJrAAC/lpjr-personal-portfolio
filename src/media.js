@@ -39,7 +39,7 @@ export async function updateMedia(id, updates) {
   return media;
 }
 
-export async function deleteMedia(id) {
+export async function destroyMedia(id) {
   let allMedia = await localforage.getItem("media");
   let index = allMedia.findIndex((media) => media.id === id);
   if (index > -1) {

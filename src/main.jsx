@@ -10,6 +10,7 @@ import { About } from "./routes/about";
 import { App, loader as appLoader, action as appAction } from "./routes/app";
 import { Edit, action as editAction } from "./routes/app/edit";
 import { Media, loader as mediaLoader } from "./routes/app/media";
+import { action as destroyAction } from "./routes/app/destroy";
 import { Audio } from "./routes/app/audio";
 import { Video } from "./routes/app/video";
 
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
             element: <Edit />,
             loader: mediaLoader,
             action: editAction,
+          },
+          {
+            path: "/app/:mediaId/destroy",
+            action: destroyAction,
           },
           {
             path: "/app/audio",
