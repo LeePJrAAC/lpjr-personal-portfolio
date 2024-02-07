@@ -11,8 +11,8 @@ import { App, loader as appLoader, action as appAction } from "./routes/app";
 import { Edit, action as editAction } from "./routes/app/edit";
 import { Media, loader as mediaLoader } from "./routes/app/media";
 import { action as destroyAction } from "./routes/app/destroy";
-import { Audio } from "./routes/app/audio";
-import { Video } from "./routes/app/video";
+import { Audio, loader as audioLoader } from "./routes/app/audio";
+import { Video, loader as videoLoader } from "./routes/app/video";
 
 const router = createBrowserRouter([
   {
@@ -46,12 +46,14 @@ const router = createBrowserRouter([
             action: destroyAction,
           },
           {
-            path: "/app/audio",
+            path: "/app/:mediaId/audio",
             element: <Audio />,
+            loader: audioLoader,
           },
           {
-            path: "/app/video",
+            path: "/app/:mediaId/video",
             element: <Video />,
+            loader: videoLoader,
           },
         ],
       },

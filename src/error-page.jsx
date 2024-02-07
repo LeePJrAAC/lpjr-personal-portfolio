@@ -6,7 +6,7 @@ const errorCardStyle = {
   alignItems: "center",
   justifyContent: "center",
   gap: "1em",
-  "text-align": "center",
+  textAlign: "center",
   padding: "1em",
   margin: "1em",
   border: "1px solid #f00",

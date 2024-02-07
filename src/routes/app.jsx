@@ -33,14 +33,15 @@ export function App() {
         <NavLink to='/app/video' className='nav-link'>
           Video
         </NavLink>
-        <NavLink to='/app/media' className='nav-link'>
-          Media
-        </NavLink>
         {allMedia.length > 0 ? (
-          allMedia.map((media) => {
+          allMedia.map((media, idx) => {
             return (
-              <NavLink to={`/app/${media.id}`} className='nav-link'>
-                {media.listing || media.title || media.id}
+              <NavLink
+                to={`/app/${media.id}/${media.format === "audio" ? `audio` : `video`}`}
+                className='nav-link'
+                key={`${media.listing}-${idx}`}
+              >
+                {media.listing || media.title}
               </NavLink>
             );
           })
