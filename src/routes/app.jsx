@@ -1,9 +1,25 @@
-import { NavLink, Link, Outlet, useLocation, useLoaderData, redirect, Form } from "react-router-dom";
+import { useEffect } from "react";
+import {
+  NavLink,
+  Outlet,
+  useLocation,
+  useLoaderData,
+  redirect,
+  Form,
+  useNavigation,
+  useSubmit,
+} from "react-router-dom";
 // crud
 import { getAllMedia, createMedia } from "../media";
 
-export async function loader() {
-  return await getAllMedia();
+export async function loader({ request }) {
+  const url = new URL(request.url);
+  const q = url.searchParams.get("q");
+  const allMedia = await getAllMedia(q);
+
+  console.log("q", q, "allMedia", allMedia);
+
+  return { allMedia, q };
 }
 
 export async function action() {
@@ -12,27 +28,42 @@ export async function action() {
 }
 
 export function App() {
-  const allMedia = useLoaderData();
+  const { allMedia, q } = useLoaderData();
+  const navigation = useNavigation();
+  const submit = useSubmit();
 
-  console.log("allMedia: ", allMedia);
+  const searching = navigation.location && new URLSearchParams(navigation.location.search).has("q");
+
+  useEffect(() => {
+    document.getElementById("q").value = q;
+  }, [q]);
 
   return (
     <div className='flex flex-row p-4'>
       <div className='flex flex-col w-1/3'>
         <div className='flex flex-row space-x-4'>
-          <input type='text' />
+          <Form id='search-form' role='search'>
+            <input
+              type='search'
+              id='q'
+              className={searching ? "loading" : ""}
+              placeholder='Search'
+              name='q'
+              defaultValue={q}
+              onChange={(e) => {
+                const isFirstSearch = q === null;
+                submit(e.currentTarget.form, { replace: isFirstSearch });
+              }}
+            />
+            <div id='search-spinner' aria-hidden hidden={!searching} />
+            <div className='sr-only' aria-live='polite'></div>
+          </Form>
           <Form method='post'>
             <button className='btn-submit' type='submit'>
               New
             </button>
           </Form>
         </div>
-        <NavLink to='/app/audio' className='nav-link'>
-          Audio
-        </NavLink>
-        <NavLink to='/app/video' className='nav-link'>
-          Video
-        </NavLink>
         {allMedia.length > 0 ? (
           allMedia.map((media, idx) => {
             return (
@@ -46,7 +77,11 @@ export function App() {
             );
           })
         ) : (
-          <i>No Media</i>
+          <Form method='post'>
+            <button className='btn-submit' type='submit'>
+              New Media
+            </button>
+          </Form>
         )}
       </div>
       <div className='flex flex-col w-2/3 px-4'>

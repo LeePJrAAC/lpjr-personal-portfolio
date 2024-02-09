@@ -9,8 +9,11 @@ function set(media) {
 export async function getAllMedia(query = "") {
   let allMedia = await localforage.getItem("media");
   if (!allMedia) allMedia = [];
+
+  console.log("query", query);
+
   if (query) {
-    allMedia = matchSorter(allMedia, query, { keys: ["name", "title"] });
+    allMedia = matchSorter(allMedia, query, { keys: ["listing"] });
   }
   return allMedia.sort(sortBy("createdAt"));
 }
